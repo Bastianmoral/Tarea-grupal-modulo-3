@@ -23,7 +23,7 @@ pipeline {
               nexusArtifactUploader(
                 nexusVersion: "nexus3",
                 protocol: "http",
-                nexusUrl: "http://localhost:8081/repository/RepositorioEjerM3",
+                nexusUrl: "localhost:8081/repository/RepositorioEjerM3",
                 groupId: pom.groupId,
                 version: pom.version,
                 repository: "RepositorioEjerM3",
