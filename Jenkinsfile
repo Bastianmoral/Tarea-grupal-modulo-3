@@ -6,7 +6,7 @@ pipeline {
       stages {
         stage('Build') {
             steps {
-              sh 'mvn -B package'
+              sh 'mvn -B package -Dversion=1.0-SNAPSHOT'
             }
         }   
 
@@ -19,14 +19,12 @@ pipeline {
             artifactPath = filesByGlob[0].path;
             artifactExists = fileExists artifactPath;
             if(artifactExists) {
-              echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
-              nexusArtifactUploader(
+              echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version 1.0-SNAPSHOT";              nexusArtifactUploader(
                 nexusVersion: "nexus3",
                 protocol: "http",
                 nexusUrl: "localhost:8081/repository/RepositorioEjerM3",
                 groupId: pom.groupId,
-                version: pom.version,
-                repository: "RepositorioEjerM3",
+                version: '1.0-SNAPSHOT',                repository: "RepositorioEjerM3",
                 credentialsId: "Credencial nexus",
                 artifacts: [
                   [artifactId: pom.artifactId,
