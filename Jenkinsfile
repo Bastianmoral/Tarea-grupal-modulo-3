@@ -56,7 +56,7 @@ pipeline {
             -Dsonar.sources=src/ \
             -Dsonar.java.binaries=target/classes/ \
             -Dsonar.exclusions=src/test/java/****/*.java \
-            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}-SNAPSHOT"""
+            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"""
         }
       }
     }
