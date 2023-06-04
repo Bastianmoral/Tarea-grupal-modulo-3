@@ -44,7 +44,7 @@ pipeline {
       }
     }
     
-    stage('SonarQube analysis') {
+/*     stage('SonarQube analysis') {
       environment {
         SCANNER_HOME = tool 'SonarQubeConection'
       }
@@ -55,12 +55,39 @@ pipeline {
             -Dsonar.projectName=projectName \
             -Dsonar.sources=src/ \
             -Dsonar.java.binaries=target/classes/ \
-            -Dsonar.exclusions=src/test/java/****/*.java \
-            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"""
+            -Dsonar.exclusions=src/test/java/****""/""*.java \
+            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}""" 
         }
       }
     }
+  } */
+
+  stage('SonarQube analysis') {
+  environment {
+    SCANNER_HOME = tool 'SonarQubeConection'
   }
+  steps {
+    withSonarQubeEnv(credentialsId: 'SonarQube_Pass', installationName: 'SonarQube') {
+      script {
+        def scannerCmd = "${env.SCANNER_HOME}/bin/sonar-scanner"
+        def projectKey = "projectKey"
+        def projectName = "projectName"
+        def sourcesDir = "src/"
+        def binariesDir = "target/classes/"
+        def exclusions = "src/test/java/****/*.java"
+        def projectVersion = "${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"
+        
+        sh """${scannerCmd} \
+          -Dsonar.projectKey=${projectKey} \
+          -Dsonar.projectName=${projectName} \
+          -Dsonar.sources=${sourcesDir} \
+          -Dsonar.java.binaries=${binariesDir} \
+          -Dsonar.exclusions=${exclusions} \
+          -Dsonar.projectVersion=${projectVersion}"""
+      }
+    }
+  }
+}
 
   post {
     always {
