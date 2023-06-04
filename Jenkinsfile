@@ -50,7 +50,7 @@ pipeline {
       }
       steps {
         withSonarQubeEnv(credentialsId: 'SonarQube_Pass', installationName: 'SonarQube') {
-          sh """$SCANNER_HOME/bin/SonarQubeConection \
+          sh """$SCANNER_HOME/bin/SonarQube \
             -Dsonar.projectKey=projectKey \
             -Dsonar.projectName=projectName \
             -Dsonar.sources=src/ \
