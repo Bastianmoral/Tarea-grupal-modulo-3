@@ -100,7 +100,7 @@ pipeline {
       }
     }
   }
-}
+
 
 def custom_msg() {
   def JENKINS_URL = "localhost:8080"
@@ -108,4 +108,5 @@ def custom_msg() {
   def BUILD_ID = env.BUILD_ID
   def JENKINS_LOG = "FAILED: Job [${env.JOB_NAME}] Logs path: ${JENKINS_URL}/job/${JOB_NAME}/${BUILD_ID}/consoleText"
   return JENKINS_LOG
+}
 }
