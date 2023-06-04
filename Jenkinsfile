@@ -44,23 +44,22 @@ pipeline {
       }
     }
     
-     stage('SonarQube analysis') {
-      environment {
-        SCANNER_HOME = tool 'SonarQubeConection'
+stage('SonarQube analysis') {
+  steps {
+    script {
+      def scannerHome = tool 'SonarQubeConection'
+      withSonarQubeEnv(credentialsId: 'SonarQube_Pass', installationName: 'SonarQube') {
+        sh "${scannerHome}/bin/sonar-scanner \
+          -Dsonar.projectKey=projectKey \
+          -Dsonar.projectName=projectName \
+          -Dsonar.sources=src/ \
+          -Dsonar.java.binaries=target/classes/ \
+          -Dsonar.exclusions=src/test/java/****/*.java \
+          -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"
       }
-      steps {
-        withSonarQubeEnv(credentialsId: 'SonarQube_Pass', installationName: 'SonarQube') {
-          sh """$SCANNER_HOME/bin/sonar-scanner \
-            -Dsonar.projectKey=projectKey \
-            -Dsonar.projectName=projectName \
-            -Dsonar.sources=src/ \
-            -Dsonar.java.binaries=target/classes/ \
-            -Dsonar.exclusions=src/test/java/****/*.java \
-            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"""
-        }
-      }
-    } 
+    }
   }
+}
 
   post {
     always {
