@@ -45,18 +45,18 @@ pipeline {
     }
     
      stage('SonarQube analysis') {
-      environment {
-        SCANNER_HOME = tool 'SonarQubeConection'
-      }
       steps {
+        script {
+          def scannerHome = tool 'sonarQubeConection'
         withSonarQubeEnv(credentialsId: 'SonarQube_Pass', installationName: 'SonarQube') {
-          sh """$SCANNER_HOME/bin/sonar-scanner \
+          sh """${scannerHome}/bin/sonar-scanner \
             -Dsonar.projectKey=projectKey \
             -Dsonar.projectName=projectName \
             -Dsonar.sources=src/ \
             -Dsonar.java.binaries=target/classes/ \
             -Dsonar.exclusions=src/test/java/****/*.java \
             -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"""
+          }
         }
       }
     } 
