@@ -55,14 +55,12 @@ pipeline {
             -Dsonar.projectName=projectName \
             -Dsonar.sources=src/ \
             -Dsonar.java.binaries=target/classes/ \
-            -Dsonar.exclusions=src/test/java/****""/""*.java \
-            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}""" 
+            -Dsonar.exclusions=src/test/java/****""/*.java \
+            -Dsonar.projectVersion=${BUILD_NUMBER}-${GIT_COMMIT_SHORT}"""
         }
       }
-    }
-  } */
-
-  stage('SonarQube analysis') {
+    } */
+    stage('SonarQube analysis') {
   environment {
     SCANNER_HOME = tool 'SonarQubeConection'
   }
@@ -88,6 +86,7 @@ pipeline {
     }
   }
 }
+  }
 
   post {
     always {
@@ -100,7 +99,7 @@ pipeline {
       }
     }
   }
-
+}
 
 def custom_msg() {
   def JENKINS_URL = "localhost:8080"
@@ -108,5 +107,4 @@ def custom_msg() {
   def BUILD_ID = env.BUILD_ID
   def JENKINS_LOG = "FAILED: Job [${env.JOB_NAME}] Logs path: ${JENKINS_URL}/job/${JOB_NAME}/${BUILD_ID}/consoleText"
   return JENKINS_LOG
-}
 }
