@@ -48,7 +48,7 @@ pipeline {
       steps {
         script {
           def scannerHome = tool 'SonarQubeConection'
-        withSonarQubeEnv(credentialsId: 'SonarQube_Pass', installationName: 'SonarQube') {
+        withSonarQubeEnv(credentialsId: '	TRABAJO_GRUPAL_SONARQUBE_PASS', installationName: 'SonarQube') {
           sh """${scannerHome}/bin/sonar-scanner \
             -Dsonar.projectKey=projectKey \
             -Dsonar.projectName=projectName \
